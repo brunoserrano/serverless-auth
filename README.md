@@ -24,6 +24,13 @@ Custom Authorizers allow you to run an AWS Lambda Function before your targeted 
 
 ## Setup
 
+0. Install serverless if you didn't do it yet.
+
+  ```bash
+  npm install serverless --global
+  serverless login
+  ```
+
 1. `npm install` json web token dependencies
 
 2. Setup an [auth0 application](https://auth0.com/docs/applications).
@@ -33,6 +40,17 @@ Custom Authorizers allow you to run an AWS Lambda Function before your targeted 
 4. Get your `public key` (under `applications->${YOUR_APP_NAME}->settings->Show Advanced Settings->Certificates->DOWNLOAD CERTIFICATE`). Download it as `PEM` format and save it as a new file called `public_key`
 
 5. Deploy the service with `serverless deploy` and grab the public and private endpoints.
+
+  ```bash
+  export AWS_ACCESS_KEY_ID=<your-key-here>
+  export AWS_SECRET_ACCESS_KEY=<your-secret-key-here>
+  # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are now available for serverless to use
+  # For a more permanent solution:
+  # serverless config credentials --provider aws --key <your-key-here> --secret <your-secret-key-here>
+  serverless deploy
+
+  # 'export' command is valid only for unix shells. In Windows - use 'set' instead of 'export'
+  ```
 
 6. Plugin your `AUTH0_CLIENT_ID`, `AUTH0_DOMAIN`, and the `PUBLIC_ENDPOINT` + `PRIVATE_ENDPOINT` from aws in top of the `frontend/app.js` file.
 
